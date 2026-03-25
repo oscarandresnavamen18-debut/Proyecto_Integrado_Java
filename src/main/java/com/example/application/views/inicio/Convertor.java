@@ -1,4 +1,5 @@
-package com.example;
+package com.example.application.views.inicio;
+
 
 public abstract class Convertor {
     private String nombreCategoria;
@@ -80,3 +81,4 @@ public abstract class Convertor {
     }
     
 }
+
