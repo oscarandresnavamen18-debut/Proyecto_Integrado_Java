@@ -80,5 +80,8 @@ public abstract class Convertor {
         this.resultado = resultado;
     }
     
+  
+    public abstract double convertir();
 }
+
 
