@@ -8,8 +8,8 @@ public abstract class Convertor {
     private String unidadOrigen;
     private String unidadDestino;
     private double resultado;
-   
-   
+
+
     public Convertor(String nombreCategoria, String icono, double valorEntrada, String unidadOrigen,
         String unidadDestino, double resultado) {
         this.nombreCategoria = nombreCategoria;
@@ -80,5 +80,7 @@ public abstract class Convertor {
         this.resultado = resultado;
     }
     
+    public abstract double convertir();
 }
+
 
