@@ -5,8 +5,7 @@ public class ConvertorPesoMasa extends Convertor implements IConvertidor {
     private String tipoConversion;
 
     // 🔹 Constructor usando super (HERENCIA)
-    public ConvertorPesoMasa(String nombreCategoria, String icono, double valorEntrada,
-                             String unidadOrigen, String unidadDestino) {
+    public ConvertorPesoMasa(String nombreCategoria, String icono, double valorEntrada,String unidadOrigen, String unidadDestino) {
 
         super(nombreCategoria, icono, valorEntrada, unidadOrigen, unidadDestino, 0);
         this.tipoConversion = "Peso/Masa";

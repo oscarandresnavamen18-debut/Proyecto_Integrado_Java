@@ -1,5 +1,7 @@
 package com.example.application.views.inicio;
 
+import org.vaadin.lineawesome.LineAwesomeIconUrl;
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.Div;
@@ -8,10 +10,9 @@ import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
-import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Menu;
-import org.vaadin.lineawesome.LineAwesomeIconUrl;
+import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
 
 @PageTitle("Convertidor Peso/Masa")
 @Route("convertidor")
@@ -19,14 +20,19 @@ import org.vaadin.lineawesome.LineAwesomeIconUrl;
 public class ConvertorView extends VerticalLayout {
 
     public ConvertorView() {
-        Div card = new Div();
+    setSizeFull();
+    setAlignItems(Alignment.CENTER);
+    setJustifyContentMode(JustifyContentMode.CENTER);
+    getStyle().set("background", "linear-gradient(135deg, #86f18f, #a8e063)");
+    getStyle().set("min-height", "100vh");
+    Div card = new Div();
         card.getStyle()
-                .set("background", "#ffffff")
-                .set("padding", "30px")
-                .set("border-radius", "15px")
-                .set("box-shadow", "0 8px 20px rgba(0,0,0,0.1)")
-                .set("width", "350px")
-                .set("text-align", "center");
+                .set("background", "rgba(255,255,255,0.15)")
+        .set("padding", "30px")
+        .set("border-radius", "15px")
+        .set("box-shadow", "0 8px 20px rgba(0,0,0,0.1)")
+        .set("width", "350px")
+        .set("text-align", "center");
 
         H1 titulo = new H1("⚖️ Convertidor");
         titulo.getStyle().set("margin", "0");
