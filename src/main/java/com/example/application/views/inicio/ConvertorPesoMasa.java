@@ -1,14 +1,11 @@
 package com.example.application.views.inicio;
-import com.example.application.views.inicio.Convertor;
 
 public class ConvertorPesoMasa extends Convertor implements IConvertidor {
-    private String tipoConversion;
 
     // 🔹 Constructor usando super (HERENCIA)
     public ConvertorPesoMasa(String nombreCategoria, String icono, double valorEntrada,String unidadOrigen, String unidadDestino) {
 
         super(nombreCategoria, icono, valorEntrada, unidadOrigen, unidadDestino, 0);
-        this.tipoConversion = "Peso/Masa";
     }
 
     // 🔥 POLIMORFISMO (sobrescribes el método del padre)

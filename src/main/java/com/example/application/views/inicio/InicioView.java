@@ -46,9 +46,9 @@ public class InicioView extends VerticalLayout {
         Paragraph lista = new Paragraph(
                 """
                 Jorge Humberto \u2014 Monedas & Temperatura
-                Juan \u2014 Peso / Masa
+                Juan \u2014 Peso / Masa 
                 Elian Mart\u00ednez \u2014 Tiempo
-                Oscar Navarro \u2014 Por definir""");
+                Oscar Navarro \u2014 Longitud""");
         lista.getStyle().set("white-space", "pre-line").set("line-height", "1.8");
         integrantes.add(intTitle, lista);
 
@@ -80,11 +80,13 @@ public class InicioView extends VerticalLayout {
         btnTiempo.addClickListener(e ->
         btnTiempo.getUI().ifPresent(ui -> ui.navigate("ConvertorTiempo")));
 
-        Button btnOscar = new Button("❓ Por definir");
+        Button btnOscar = new Button("Longitud");
         btnOscar.getStyle()
                 .set("background", "#9b59b6").set("color", "white")
                 .set("border-radius", "10px").set("padding", "10px 20px");
-        btnOscar.setEnabled(false); // aún no disponible
+        btnOscar.addClickListener(e ->
+                btnOscar.getUI().ifPresent(ui -> ui.navigate("ConvertorLongitud")));
+
 
         HorizontalLayout botones = new HorizontalLayout(
                 btnTemperatura, btnPeso, btnMonedas, btnTiempo, btnOscar);

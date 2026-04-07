@@ -1,7 +1,8 @@
 package com.example.application.views.inicio;
 
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-public abstract class Convertor {
+public abstract class Convertor extends VerticalLayout {
     private String nombreCategoria;
     private String icono;
     private double valorEntrada;
