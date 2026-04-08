@@ -1,13 +1,13 @@
 package com.example.application.views.inicio;
 
 import com.example.application.views.MainLayout;
-import com.vaadin.flow.component.button.Button; // ✅ corregido
+import com.vaadin.flow.component.button.Button; 
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.notification.Notification; // ✅ agregado
+import com.vaadin.flow.component.notification.Notification; 
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
@@ -21,13 +21,14 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @Route(value = "ConvertorTiempo", layout = MainLayout.class)
 @AnonymousAllowed
 @Menu(order = 4)
-public class ConvertorTiempo extends VerticalLayout {
+public class ConvertorTiempo extends Convertor {
 
     public ConvertorTiempo() {
+        super("Calculadora De Tiempo", "⏱", 0, "Segundos", "Minutos", 0);
 
         setSizeFull();
-         getStyle().set("background", "linear-gradient(135deg, #6cf55d, #72cbec)");
-         getStyle().set("min-height", "100vh");
+        getStyle().set("background", "linear-gradient(135deg, #6cf55d, #72cbec)");
+        getStyle().set("min-height", "100vh");
 
         VerticalLayout header = new VerticalLayout();
         header.setHeight("90px");
@@ -69,26 +70,12 @@ public class ConvertorTiempo extends VerticalLayout {
                 return;
             }
 
-            double valor = tiempo.getValue();
-            String d = desde.getValue();
-            String h = hacia.getValue();
+            setValorEntrada(tiempo.getValue());
+            setUnidadOrigen(desde.getValue());
+            setUnidadDestino(hacia.getValue());
+            setResultado(convertir());
 
-            if (d.equals(h)) {
-                resultado.setValue(valor + " " + h);
-                return;
-            }
-
-            double segundos = valor;
-            if (d.equals("Minutos"))  segundos = valor * 60;
-            else if (d.equals("Horas"))  segundos = valor * 3600;
-            else if (d.equals("Días"))   segundos = valor * 86400;
-
-            double total = segundos;
-            if (h.equals("Minutos"))  total = segundos / 60;
-            else if (h.equals("Horas"))  total = segundos / 3600;
-            else if (h.equals("Días"))   total = segundos / 86400;
-
-            resultado.setValue(total + " " + h);
+            resultado.setValue(getResultado() + " " + hacia.getValue());
         });
 
         Button btnLimpiar = new Button("Limpiar"); 
@@ -101,7 +88,7 @@ public class ConvertorTiempo extends VerticalLayout {
 
         HorizontalLayout botones = new HorizontalLayout(btnConvertir, btnLimpiar);
         calculadora.add(tiempo, desde, hacia, botones, resultado);
-        add(calculadora); // 
+        add(calculadora);
 
         HorizontalLayout footer = new HorizontalLayout();
         footer.setWidthFull();
@@ -130,5 +117,26 @@ public class ConvertorTiempo extends VerticalLayout {
 
         footer.add(nombre, redes, linkinsta);
         add(footer);
+    }
+
+    @Override
+    public double convertir() {
+        double valor = getValorEntrada();
+        String d = getUnidadOrigen();
+        String h = getUnidadDestino();
+
+        if (d.equals(h)) return valor;
+
+        double segundos = valor;
+        if (d.equals("Minutos"))  segundos = valor * 60;
+        else if (d.equals("Horas"))  segundos = valor * 3600;
+        else if (d.equals("Días"))   segundos = valor * 86400;
+
+        double total = segundos;
+        if (h.equals("Minutos"))  total = segundos / 60;
+        else if (h.equals("Horas"))  total = segundos / 3600;
+        else if (h.equals("Días"))   total = segundos / 86400;
+
+        return total;
     }
 }

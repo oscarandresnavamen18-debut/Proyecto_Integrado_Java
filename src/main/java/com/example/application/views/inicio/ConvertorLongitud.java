@@ -24,7 +24,7 @@ public class ConvertorLongitud extends VerticalLayout implements IConvertidor {
     private String unidadDestino;
     private double resultado;
 
-    // ✅ Constructor vacío requerido por Vaadin para instanciar la vista
+    
     public ConvertorLongitud() {
         setSizeFull();
         setAlignItems(Alignment.CENTER);
