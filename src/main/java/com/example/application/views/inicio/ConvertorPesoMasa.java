@@ -1,14 +1,18 @@
 package com.example.application.views.inicio;
 
 public class ConvertorPesoMasa extends Convertor implements IConvertidor {
+     private String tipoConversion; // indica del tipo de conversio que se va a hacer
 
     // 🔹 Constructor usando super (HERENCIA)
     public ConvertorPesoMasa(String nombreCategoria, String icono, double valorEntrada,String unidadOrigen, String unidadDestino) {
 
         super(nombreCategoria, icono, valorEntrada, unidadOrigen, unidadDestino, 0);
+        this.tipoConversion = "peso/masa";
     }
 
-    // 🔥 POLIMORFISMO (sobrescribes el método del padre)
+   // Se obtiene el factor de conversión
+    // Se multiplica por el valor de entrada
+    // Se guarda el resultado
     @Override
     public double convertir() {
 
@@ -19,7 +23,7 @@ public class ConvertorPesoMasa extends Convertor implements IConvertidor {
 
         return resultado;
     }
-
+     // Método privado que devuelve el factor de conversión entre dos unidades
     private double obtenerFactor(String origen, String destino) {
 
         if (origen.equals("Kilogramos") && destino.equals("Libras")) {
