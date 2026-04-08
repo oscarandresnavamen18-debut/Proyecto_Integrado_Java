@@ -1,5 +1,6 @@
 package com.example.application.views.inicio;
 
+// Importaciones de Vaadin (componentes UI)
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.Div;
@@ -13,83 +14,90 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
+// Configuración de la vista
 @PageTitle("ConvertorLongitud")
 @Route("ConvertorLongitud")
 @AnonymousAllowed
 @Menu(order = 5)
+
+// HERENCIA + INTERFAZ
 public class ConvertorLongitud extends VerticalLayout implements IConvertidor {
 
+    // Atributos (ENCAPSULAMIENTO)
     private double valorEntrada;
     private String unidadOrigen;
     private String unidadDestino;
     private double resultado;
 
-    
+    // Constructor (interfaz gráfica)
     public ConvertorLongitud() {
+
+        // Configuración de pantalla
         setSizeFull();
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
+
+        // Fondo
         getStyle().set("background", "linear-gradient(135deg, #86f18f, #a8e063)");
         getStyle().set("min-height", "100vh");
 
+        // Contenedor principal
         Div card = new Div();
         card.getStyle()
                 .set("background", "rgba(255,255,255,0.15)")
                 .set("padding", "30px")
                 .set("border-radius", "15px")
-                .set("box-shadow", "0 8px 20px rgba(0,0,0,0.1)")
-                .set("width", "350px")
-                .set("text-align", "center");
+                .set("width", "350px");
 
+        // Títulos
         H1 titulo = new H1("📏 Convertidor");
-        titulo.getStyle().set("margin", "0");
-
         H4 subtitulo = new H4("Longitud");
-        subtitulo.getStyle().set("color", "gray");
 
+        // Campo de entrada
         NumberField valor = new NumberField();
         valor.setPlaceholder("Ingrese valor");
-        valor.setWidthFull();
 
+        // ComboBox origen
         ComboBox<String> origen = new ComboBox<>("De");
-        origen.setItems("angstrom", "nm", "micron", "mm", "cm", "m", "km", "in", "ft", "yd", "mi", "nmi");
-        origen.setWidthFull();
+        origen.setItems("m", "km", "cm", "mm", "in", "ft");
 
+        // ComboBox destino
         ComboBox<String> destino = new ComboBox<>("A");
-        destino.setItems("angstrom", "nm", "micron", "mm", "cm", "m", "km", "in", "ft", "yd", "mi", "nmi");
-        destino.setWidthFull();
+        destino.setItems("m", "km", "cm", "mm", "in", "ft");
 
+        // Botón convertir (EVENTO)
         Button convertirBtn = new Button("Convertir");
-        convertirBtn.getStyle()
-                .set("background", "#4CAF50")
-                .set("color", "white")
-                .set("width", "100%")
-                .set("border-radius", "10px");
 
+        // Resultado
         H1 resultadoTexto = new H1("0");
-        resultadoTexto.getStyle()
-                .set("color", "#4CAF50")
-                .set("margin-top", "15px");
 
+        // Acción del botón
         convertirBtn.addClickListener(e -> {
+
+            // Validación
             if (valor.isEmpty() || origen.isEmpty() || destino.isEmpty()) {
                 Notification.show("Error: Completa los campos");
                 return;
             }
 
+            // Guardar datos
             this.valorEntrada = valor.getValue();
             this.unidadOrigen = origen.getValue();
             this.unidadDestino = destino.getValue();
 
+            // Llamar método (POLIMORFISMO)
             double resultado = convertir();
+
+            // Mostrar resultado
             resultadoTexto.setText(String.format("%.6f", resultado));
         });
 
+        // Agregar elementos
         card.add(titulo, subtitulo, valor, origen, destino, convertirBtn, resultadoTexto);
         add(card);
     }
 
-    // Getters y setters
+    // GETTERS Y SETTERS (ENCAPSULAMIENTO)
     public double getValorEntrada() {
         return valorEntrada;
     }
@@ -122,6 +130,7 @@ public class ConvertorLongitud extends VerticalLayout implements IConvertidor {
         this.resultado = resultado;
     }
 
+    // MÉTODO PRINCIPAL (POLIMORFISMO)
     @Override
     public double convertir() {
 
@@ -129,38 +138,24 @@ public class ConvertorLongitud extends VerticalLayout implements IConvertidor {
         double enMetros = 0;
         double resultado = 0;
 
-        // ORIGEN → METROS
+        // Convertir origen → metros
         switch (getUnidadOrigen()) {
-            case "angstrom": enMetros = valor * 1e-10;  break;
-            case "nm":       enMetros = valor * 1e-9;   break;
-            case "micron":   enMetros = valor * 1e-6;   break;
-            case "mm":       enMetros = valor / 1000;   break;
-            case "cm":       enMetros = valor / 100;    break;
-            case "m":        enMetros = valor;           break;
-            case "km":       enMetros = valor * 1000;   break;
-            case "in":       enMetros = valor * 0.0254; break;
-            case "ft":       enMetros = valor * 0.3048; break;
-            case "yd":       enMetros = valor * 0.9144; break;
-            case "mi":       enMetros = valor * 1609.34;break;
-            case "nmi":      enMetros = valor * 1852;   break;
-            default: System.out.println("Unidad origen no válida");
+            case "m":  enMetros = valor; break;
+            case "km": enMetros = valor * 1000; break;
+            case "cm": enMetros = valor / 100; break;
+            case "mm": enMetros = valor / 1000; break;
+            case "in": enMetros = valor * 0.0254; break;
+            case "ft": enMetros = valor * 0.3048; break;
         }
 
-        // METROS → DESTINO
+        // Convertir metros → destino
         switch (getUnidadDestino()) {
-            case "angstrom": resultado = enMetros / 1e-10;  break;
-            case "nm":       resultado = enMetros / 1e-9;   break;
-            case "micron":   resultado = enMetros / 1e-6;   break;
-            case "mm":       resultado = enMetros * 1000;   break;
-            case "cm":       resultado = enMetros * 100;    break;
-            case "m":        resultado = enMetros;           break;
-            case "km":       resultado = enMetros / 1000;   break;
-            case "in":       resultado = enMetros / 0.0254; break;
-            case "ft":       resultado = enMetros / 0.3048; break;
-            case "yd":       resultado = enMetros / 0.9144; break;
-            case "mi":       resultado = enMetros / 1609.34;break;
-            case "nmi":      resultado = enMetros / 1852;   break;
-            default: System.out.println("Unidad destino no válida");
+            case "m":  resultado = enMetros; break;
+            case "km": resultado = enMetros / 1000; break;
+            case "cm": resultado = enMetros * 100; break;
+            case "mm": resultado = enMetros * 1000; break;
+            case "in": resultado = enMetros / 0.0254; break;
+            case "ft": resultado = enMetros / 0.3048; break;
         }
 
         setResultado(resultado);
